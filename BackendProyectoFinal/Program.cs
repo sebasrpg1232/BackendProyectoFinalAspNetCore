@@ -8,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<DriverContext>(opt =>
-    opt.UseInMemoryDatabase("DriverList"));
+/*builder.Services.AddDbContext<DriverContext>(opt =>
+    opt.UseInMemoryDatabase("DriverList"));*/
 //builder.Services.AddSwaggerGen(c =>
 //{
 //    c.SwaggerDoc("v1", new() { Title = "TodoApi", Version = "v1" });
@@ -18,6 +18,10 @@ builder.Services.AddDbContext<DriverContext>(opt =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<DriverContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("ProyectoConnectionString"))
+);
 
 var app = builder.Build();
 app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
